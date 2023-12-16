@@ -1,0 +1,645 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "getHello",
+                "summary": "Basic hello world for testing the API",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/magasin": {
+            "post": {
+                "operationId": "MagasinController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateMagasinDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The record has been successfully created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "id": 1,
+                                        "name": "Batata Store"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request. The request was invalid or cannot be otherwise served."
+                    },
+                    "409": {
+                        "description": "Conflict. A magasin with the same name already exists."
+                    }
+                }
+            },
+            "get": {
+                "operationId": "MagasinController_findAll",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "Bearer token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The records have been successfully retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": [
+                                        {
+                                            "id": 1,
+                                            "name": "Batata Store"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/magasin/{id}": {
+            "get": {
+                "operationId": "MagasinController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "MagasinController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateMagasinDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "MagasinController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/magasin/{id}/addArticle/{articleId}": {
+            "post": {
+                "operationId": "MagasinController_addArticle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "articleId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "quantite": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The article has been successfully added to the store.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "id": 1,
+                                        "magasin_id": 1,
+                                        "article_id": 1,
+                                        "quantite": 1,
+                                        "article": {
+                                            "id": 1,
+                                            "name": "Batata",
+                                            "photo": "/images/batata.jpg",
+                                            "category_id": 10
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found. The magasin or the article does not exist."
+                    }
+                }
+            }
+        },
+        "/article": {
+            "post": {
+                "operationId": "ArticleController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateArticleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                }
+            },
+            "get": {
+                "operationId": "ArticleController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/article/{id}": {
+            "get": {
+                "operationId": "ArticleController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "ArticleController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateArticleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "ArticleController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/category": {
+            "post": {
+                "operationId": "CategoryController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCategoryDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                }
+            },
+            "get": {
+                "operationId": "CategoryController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/category/{id}": {
+            "get": {
+                "operationId": "CategoryController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "CategoryController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCategoryDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "CategoryController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "operationId": "AuthController_create",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAuthDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                }
+            },
+            "get": {
+                "operationId": "AuthController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/auth/{id}": {
+            "get": {
+                "operationId": "AuthController_findOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "AuthController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAuthDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "AuthController_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_login",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "info": {
+        "title": "Stock management API",
+        "description": "The stock management API description",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "CreateMagasinDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the store",
+                        "example": "Batata Store"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "UpdateMagasinDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "CreateArticleDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the article",
+                        "example": "Batata"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "description": "The image of the article",
+                        "example": "/images/batata.jpg"
+                    },
+                    "category_id": {
+                        "type": "number",
+                        "description": "Article's category",
+                        "example": 10
+                    }
+                },
+                "required": [
+                    "name",
+                    "photo",
+                    "category_id"
+                ]
+            },
+            "UpdateArticleDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the article",
+                        "example": "Batata"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "description": "The image of the article",
+                        "example": "/images/batata.jpg"
+                    },
+                    "category_id": {
+                        "type": "number",
+                        "description": "Article's category",
+                        "example": 10
+                    }
+                }
+            },
+            "CreateCategoryDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the category",
+                        "example": "Batata"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "The image of the category",
+                        "example": "/images/batata.jpg"
+                    }
+                },
+                "required": [
+                    "name",
+                    "image"
+                ]
+            },
+            "UpdateCategoryDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the category",
+                        "example": "Batata"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "The image of the category",
+                        "example": "/images/batata.jpg"
+                    }
+                }
+            },
+            "CreateAuthDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "UpdateAuthDto": {
+                "type": "object",
+                "properties": {}
+            }
+        }
+    }
+}
